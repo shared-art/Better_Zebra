@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Feed the Zebra</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Feed the Zebra</h1>
+    <p class="subtitle">Drag a label CSV onto its mouth.</p>
+  </header>
+
+  <div id="stage" class="stage">
+
+    <svg id="scene" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+
+      <ellipse class="shadow" cx="460" cy="468" rx="230" ry="14" />
+      <line class="ground" x1="30" y1="468" x2="870" y2="468" />
+
+      <!-- ================= ZEBRA ================= -->
+      <g id="zebra">
+
+        <!-- tail -->
+        <path class="stripe-fill" d="M266,300 C220,320 200,360 214,404 C224,392 236,388 246,398
+                 C240,364 250,330 280,308 Z" />
+
+        <!-- back legs -->
+        <g class="leg">
+          <rect x="322" y="360" width="30" height="96" rx="10" />
+          <rect class="leg-stripe" x="322" y="378" width="30" height="10" />
+          <rect class="leg-stripe" x="322" y="404" width="30" height="10" />
+          <rect class="leg-stripe" x="322" y="430" width="30" height="10" />
+        </g>
+        <g class="leg">
+          <rect x="368" y="360" width="30" height="96" rx="10" />
+          <rect class="leg-stripe" x="368" y="378" width="30" height="10" />
+          <rect class="leg-stripe" x="368" y="404" width="30" height="10" />
+          <rect class="leg-stripe" x="368" y="430" width="30" height="10" />
+        </g>
+
+        <!-- front legs -->
+        <g class="leg">
+          <rect x="524" y="360" width="30" height="96" rx="10" />
+          <rect class="leg-stripe" x="524" y="378" width="30" height="10" />
+          <rect class="leg-stripe" x="524" y="404" width="30" height="10" />
+          <rect class="leg-stripe" x="524" y="430" width="30" height="10" />
+        </g>
+        <g class="leg">
+          <rect x="570" y="360" width="30" height="96" rx="10" />
+          <rect class="leg-stripe" x="570" y="378" width="30" height="10" />
+          <rect class="leg-stripe" x="570" y="404" width="30" height="10" />
+          <rect class="leg-stripe" x="570" y="430" width="30" height="10" />
+        </g>
+
+        <!-- body -->
+        <g id="torso-group">
+          <clipPath id="bodyClip">
+            <ellipse cx="460" cy="345" rx="185" ry="98" />
+          </clipPath>
+
+          <ellipse id="body" cx="460" cy="345" rx="185" ry="98" />
+
+          <g clip-path="url(#bodyClip)" class="stripes">
+            <path d="M290,260 q10,90 0,175" />
+            <path d="M320,250 q14,95 -4,190" />
+            <path d="M355,248 q14,97 -4,196" />
+            <path d="M392,250 q14,95 -4,190" />
+            <path d="M430,255 q14,90 -4,180" />
+            <path d="M470,255 q14,90 -4,180" />
+            <path d="M510,255 q14,92 -4,184" />
+            <path d="M548,258 q14,88 -4,178" />
+            <path d="M585,262 q12,84 -4,168" />
+            <path d="M618,268 q10,78 -4,156" />
+          </g>
+
+          <!-- belly / stomach rumble anchor -->
+          <g id="stomach">
+            <ellipse cx="460" cy="392" rx="80" ry="40" fill="transparent" />
+            <g id="rumble-lines">
+              <path d="M400,392 q15,-14 30,0 q15,14 30,0 q15,-14 30,0" />
+              <path d="M400,404 q15,-14 30,0 q15,14 30,0 q15,-14 30,0" />
+            </g>
+          </g>
+        </g>
+
+        <!-- mane along the neck -->
+        <g id="mane" class="mane-fill">
+          <path d="M566,150 l14,-20 6,22 z" />
+          <path d="M584,158 l14,-22 6,24 z" />
+          <path d="M602,168 l14,-22 6,24 z" />
+          <path d="M620,180 l13,-21 6,23 z" />
+        </g>
+
+        <!-- neck -->
+        <g id="neck-group">
+          <path id="neck" d="M552,300 C556,250 590,205 636,178
+                   C660,164 672,168 662,196
+                   C630,224 608,262 606,308 Z" />
+          <g class="stripes neck-stripes">
+            <path d="M580,235 q22,-8 38,-24" />
+            <path d="M566,262 q26,-8 44,-26" />
+            <path d="M580,205 q18,-10 32,-24" />
+          </g>
+        </g>
+
+        <!-- ===== HEAD (this whole group squishes during the turn) ===== -->
+        <g id="head">
+
+          <g id="head-shape">
+            <ellipse cx="690" cy="188" rx="62" ry="50" />
+            <path d="M738,168 C778,166 812,178 818,196 C812,212 778,216 742,208 Z" />
+            <g class="stripes">
+              <path d="M660,150 q20,6 34,20" />
+              <path d="M672,220 q18,-4 30,-16" />
+              <path d="M760,180 q16,4 28,10" />
+            </g>
+
+            <!-- ears -->
+            <path class="ear" d="M654,146 C648,116 660,102 676,98 C672,124 674,142 682,154 Z" />
+            <path class="ear" d="M700,140 C704,108 722,96 738,100 C726,122 716,140 716,154 Z" />
+
+            <!-- horn -->
+            <path class="horn" d="M690,100 C686,72 690,44 700,20 C710,44 712,72 706,100 Z" />
+            <path class="horn-twist" d="M691,90 L707,84 M690,72 L708,66 M691,54 L707,48 M693,36 L705,32" />
+
+            <!-- nostril, shared by both faces -->
+            <ellipse cx="808" cy="198" rx="4" ry="3" class="nostril" />
+          </g>
+
+          <!-- profile face: visible while grazing / idle -->
+          <g id="face-profile">
+            <circle cx="712" cy="176" r="9" class="eye-white" />
+            <circle id="pupil-profile" cx="715" cy="176" r="4.5" class="pupil" />
+            <ellipse id="mouth-profile" cx="800" cy="200" rx="11" ry="4" />
+          </g>
+
+          <!-- front-facing happy face: revealed when the zebra turns to look at you -->
+          <g id="face-front">
+            <path class="happy-eye" d="M672,172 q12,-14 24,0" />
+            <path class="happy-eye" d="M726,172 q12,-14 24,0" />
+            <path id="mouth-front" class="smile" d="M690,206 q40,34 80,0 q-40,20 -80,0 Z" />
+            <circle class="blush" cx="668" cy="196" r="10" />
+            <circle class="blush" cx="784" cy="196" r="10" />
+          </g>
+
+        </g>
+        <!-- ===== /HEAD ===== -->
+
+      </g>
+      <!-- ================= /ZEBRA ================= -->
+
+      <!-- ================= SPONGE SIDEKICK ================= -->
+      <g id="sponge">
+        <g id="sponge-tilt">
+          <g id="sponge-arm-left" class="sponge-arm">
+            <path d="M0,0 C-26,-6 -46,6 -60,26" />
+            <circle cx="-60" cy="26" r="9" />
+          </g>
+          <g id="sponge-arm-right" class="sponge-arm">
+            <path d="M0,0 C26,-6 46,6 60,26" />
+            <circle cx="60" cy="26" r="9" />
+          </g>
+
+          <rect id="sponge-body" x="-46" y="-52" width="92" height="88" rx="16" />
+          <g class="sponge-holes">
+            <ellipse cx="-20" cy="-24" rx="6" ry="4" />
+            <ellipse cx="10" cy="-30" rx="5" ry="4" />
+            <ellipse cx="24" cy="-6" rx="6" ry="4" />
+            <ellipse cx="-8" cy="6" rx="5" ry="4" />
+            <ellipse cx="-26" cy="10" rx="4" ry="3" />
+          </g>
+
+          <circle class="sponge-eye-white" cx="-16" cy="-18" r="13" />
+          <circle class="sponge-eye-white" cx="18" cy="-18" r="13" />
+          <circle class="sponge-pupil" cx="-13" cy="-15" r="5.5" />
+          <circle class="sponge-pupil" cx="21" cy="-15" r="5.5" />
+          <path id="sponge-mouth" class="sponge-smile" d="M-22,4 Q0,22 22,4" />
+          <circle class="sponge-tooth" cx="-3" cy="10" r="3" />
+
+          <rect class="sponge-leg" x="-30" y="34" width="14" height="20" rx="5" />
+          <rect class="sponge-leg" x="16" y="34" width="14" height="20" rx="5" />
+        </g>
+      </g>
+      <!-- ================= /SPONGE ================= -->
+
+      <!-- ================= INCOMING FILE ================= -->
+      <g id="file-icon">
+        <path d="M-24,-30 L8,-30 L24,-14 L24,30 L-24,30 Z" />
+        <path d="M8,-30 L8,-14 L24,-14 Z" class="fold" />
+        <text x="0" y="12" text-anchor="middle" class="file-label">CSV</text>
+      </g>
+      <!-- ================= /INCOMING FILE ================= -->
+
+    </svg>
+
+    <div id="drop-zone" class="drop-zone" aria-label="Drop a CSV file on the zebra">
+      <span>drop CSV here</span>
+    </div>
+
+  </div>
+
+  <div id="status" class="status">Waiting for a CSV&hellip;</div>
+
+  <label class="preview-toggle">
+    <input type="checkbox" id="preview-mode" />
+    Test mode (preview only, don't actually print)
+  </label>
+
+  <details id="serious-business" class="serious-business">
+    <summary>🧐 Serious Business Mode <span class="sb-hint">(manual text overrides)</span></summary>
+    <div class="sb-grid">
+      <label>
+        Text size (dots)
+        <input type="number" id="sb-font-size" min="10" max="50" step="1" placeholder="30" />
+      </label>
+      <label>
+        Horizontal alignment
+        <select id="sb-h-align">
+          <option value="C" selected>Center</option>
+          <option value="L">Left</option>
+          <option value="R">Right</option>
+        </select>
+      </label>
+      <label>
+        Vertical alignment
+        <select id="sb-v-align">
+          <option value="C" selected>Center</option>
+          <option value="T">Top</option>
+          <option value="B">Bottom</option>
+        </select>
+      </label>
+    </div>
+    <p class="sb-note">Label is only 0.25&Prime; tall (50 dots @ 203dpi) &mdash; big text sizes leave little room to move.</p>
+  </details>
+
+  <script src="app.js"></script>
+</body>
+</html>

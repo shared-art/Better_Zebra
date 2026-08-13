@@ -1,8 +1,7 @@
 @echo off
 REM ====================================================================
-REM  Print Labels
-REM  - Drag a .csv file onto this .bat to print its column B labels
-REM  - Or double-click to pick a file
+REM  Feed the Zebra
+REM  Double-click to launch the label-printing GUI in your browser.
 REM ====================================================================
 
 cd /d "%~dp0"
@@ -10,7 +9,4 @@ cd /d "%~dp0"
 set "PY=python"
 where python >nul 2>nul || set "PY=py"
 
-"%PY%" "%~dp0print_labels.py" %*
-
-echo.
-pause
+"%PY%" "%~dp0gui\server.py"

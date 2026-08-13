@@ -1,0 +1,348 @@
+:root {
+  --sky-top: #dff3ff;
+  --sky-bottom: #f4fbf6;
+  --ground: #bfe8c6;
+  --ink: #232323;
+  --cream: #faf6ea;
+  --horn: #f0d98c;
+  --sponge: #ffd93d;
+  --sponge-dark: #e8bd1a;
+  --accent: #4a90d9;
+  --panel: #ffffffcc;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom) 70%);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
+header {
+  text-align: center;
+  margin: 18px 0 4px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+.stage {
+  position: relative;
+  width: min(900px, 94vw);
+  aspect-ratio: 900 / 520;
+}
+
+#scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.shadow { fill: rgba(30, 30, 20, 0.14); }
+.ground { stroke: var(--ground); stroke-width: 6; stroke-linecap: round; }
+
+/* ---------- zebra base fills ---------- */
+#body, .leg rect:first-child, #neck, #head-shape ellipse, #head-shape path:first-of-type {
+  fill: var(--cream);
+  stroke: var(--ink);
+  stroke-width: 4;
+}
+
+.stripes path {
+  stroke: var(--ink);
+  stroke-width: 11;
+  stroke-linecap: round;
+  fill: none;
+}
+.neck-stripes path { stroke-width: 9; }
+
+.stripe-fill { fill: var(--cream); stroke: var(--ink); stroke-width: 4; }
+.mane-fill path { fill: var(--ink); }
+
+.leg rect.leg-stripe { fill: var(--ink); }
+.leg { filter: none; }
+
+.ear { fill: var(--cream); stroke: var(--ink); stroke-width: 4; }
+.horn { fill: var(--horn); stroke: var(--ink); stroke-width: 3.5; }
+.horn-twist { stroke: #c9a548; stroke-width: 3; fill: none; }
+.nostril { fill: var(--ink); }
+
+#rumble-lines {
+  fill: none;
+  stroke: #d98a4a;
+  stroke-width: 4;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+/* ---------- faces ---------- */
+.eye-white { fill: #fff; stroke: var(--ink); stroke-width: 2.5; }
+.pupil { fill: var(--ink); }
+#mouth-profile { fill: #7a4a3a; stroke: var(--ink); stroke-width: 2; transform-origin: 800px 200px; }
+
+#face-front { opacity: 0; }
+.happy-eye { stroke: var(--ink); stroke-width: 4.5; fill: none; stroke-linecap: round; }
+.smile { fill: #7a4a3a; stroke: var(--ink); stroke-width: 3; }
+.blush { fill: #f7a9a0; opacity: 0.65; }
+
+#head {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+#head.turning { animation: turn-face 0.6s ease-in-out; }
+#head.facing-front #face-profile { opacity: 0; }
+#head.facing-front #face-front { opacity: 1; }
+#face-profile, #face-front { transition: opacity 0.05s; }
+
+@keyframes turn-face {
+  0%   { transform: scaleX(1); }
+  50%  { transform: scaleX(0.04); }
+  100% { transform: scaleX(1); }
+}
+
+/* ---------- stomach rumble ---------- */
+#stomach.rumbling { animation: rumble 0.22s ease-in-out infinite; }
+#stomach.rumbling #rumble-lines { opacity: 1; }
+@keyframes rumble {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-2px, 1px) rotate(-1.2deg); }
+  75% { transform: translate(2px, -1px) rotate(1.2deg); }
+}
+
+/* ---------- chewing mouth ---------- */
+#mouth-profile.chewing { animation: chew 0.28s ease-in-out infinite; }
+@keyframes chew {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.25); }
+}
+
+/* ---------- incoming file ---------- */
+#file-icon {
+  transform: translate(60px, 60px) scale(1);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(.55,-0.2,.35,1.4), opacity 0.35s ease;
+  pointer-events: none;
+}
+#file-icon path:first-child { fill: #fff; stroke: var(--ink); stroke-width: 3; }
+#file-icon .fold { fill: #d8e6ef; stroke: var(--ink); stroke-width: 2; }
+.file-label { font-size: 13px; font-weight: 700; fill: var(--accent); }
+#file-icon.visible { opacity: 1; }
+#file-icon.eaten { opacity: 0; }
+
+/* ---------- sponge sidekick ---------- */
+#sponge {
+  transform: translate(455px, 420px) scale(0.001);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.55s cubic-bezier(.34,1.56,.64,1), opacity 0.3s ease;
+}
+#sponge.visible {
+  transform: translate(455px, 250px) scale(1);
+  opacity: 1;
+}
+#sponge.leaving {
+  transform: translate(455px, 420px) scale(0.001);
+  opacity: 0;
+}
+
+#sponge-body { fill: var(--sponge); stroke: var(--ink); stroke-width: 4; }
+.sponge-holes ellipse { fill: var(--sponge-dark); opacity: 0.55; }
+.sponge-eye-white { fill: #fff; stroke: var(--ink); stroke-width: 2.5; }
+.sponge-pupil { fill: var(--ink); }
+.sponge-smile { fill: none; stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; }
+.sponge-tooth { fill: #fff; stroke: var(--ink); stroke-width: 1.5; }
+.sponge-leg { fill: var(--sponge-dark); stroke: var(--ink); stroke-width: 3; }
+
+.sponge-arm path {
+  fill: none;
+  stroke: var(--sponge);
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+.sponge-arm circle { fill: var(--sponge-dark); stroke: var(--ink); stroke-width: 2; }
+#sponge-arm-left { transform-origin: -30px -20px; transition: transform 0.25s ease; }
+#sponge-arm-right { transform-origin: 30px -20px; transition: transform 0.25s ease; }
+
+#sponge-tilt { transform-box: fill-box; transform-origin: center; }
+#sponge.posing #sponge-tilt { animation: off-balance-tilt 0.5s ease-in-out; }
+
+/* landing flourish: one arm raised in a woozy wave, the other braced low
+   for balance, body tilted -- a nod to a dopey off-balance dance pose */
+#sponge.posing #sponge-arm-right {
+  animation: wave-up 0.5s ease-in-out;
+}
+#sponge.posing #sponge-arm-left {
+  transform: rotate(50deg);
+}
+
+#sponge.dancing #sponge-arm-left {
+  animation: flail-left 0.22s ease-in-out infinite;
+}
+#sponge.dancing #sponge-arm-right {
+  animation: flail-right 0.2s ease-in-out infinite;
+}
+#sponge.dancing #sponge-body {
+  animation: bob 0.3s ease-in-out infinite;
+}
+
+@keyframes off-balance-tilt {
+  0%   { transform: rotate(0deg); }
+  35%  { transform: rotate(-9deg); }
+  70%  { transform: rotate(5deg); }
+  100% { transform: rotate(-2deg); }
+}
+@keyframes wave-up {
+  0%   { transform: rotate(30deg); }
+  40%  { transform: rotate(-125deg); }
+  60%  { transform: rotate(-110deg); }
+  80%  { transform: rotate(-125deg); }
+  100% { transform: rotate(-118deg); }
+}
+@keyframes flail-left {
+  0%, 100% { transform: rotate(-30deg); }
+  50% { transform: rotate(60deg); }
+}
+@keyframes flail-right {
+  0%, 100% { transform: rotate(30deg); }
+  50% { transform: rotate(-60deg); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* ---------- idle bob for the whole zebra ---------- */
+#zebra { animation: idle-bob 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes idle-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ---------- drop zone ---------- */
+.drop-zone {
+  position: absolute;
+  left: 82%;
+  top: 30%;
+  width: 16%;
+  height: 20%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  border: 3px dashed transparent;
+  opacity: 0;
+  transition: opacity 0.2s, border-color 0.2s, background 0.2s;
+  pointer-events: none;
+}
+.stage.armed .drop-zone {
+  opacity: 0.9;
+  border-color: var(--accent);
+  background: rgba(74, 144, 217, 0.08);
+  pointer-events: all;
+}
+.stage.drag-hover .drop-zone {
+  background: rgba(74, 144, 217, 0.22);
+  border-color: #2e6fb3;
+}
+.drop-zone span { display: none; }
+.stage.armed .drop-zone span { display: inline; }
+
+/* ---------- status + controls ---------- */
+.status {
+  margin: 14px 0 2px;
+  min-height: 1.4em;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  text-align: center;
+  max-width: 90vw;
+}
+.status.error { color: #b3261e; }
+.status.success { color: #1e7a34; }
+
+.preview-toggle {
+  margin: 10px 0 10px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.serious-business {
+  margin: 0 0 24px;
+  width: min(420px, 90vw);
+  background: var(--panel);
+  border-radius: 10px;
+  padding: 4px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  font-size: 0.85rem;
+}
+.serious-business summary {
+  cursor: pointer;
+  padding: 10px 0;
+  font-weight: 600;
+  list-style: none;
+}
+.serious-business summary::-webkit-details-marker { display: none; }
+.serious-business summary::before {
+  content: "▸ ";
+  display: inline-block;
+  transition: transform 0.15s;
+}
+.serious-business[open] summary::before {
+  transform: rotate(90deg);
+}
+.sb-hint {
+  font-weight: 400;
+  opacity: 0.6;
+  font-size: 0.8em;
+}
+.sb-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  padding-bottom: 8px;
+}
+.sb-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.82em;
+  opacity: 0.85;
+}
+.sb-grid input, .sb-grid select {
+  font-size: 0.95rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.sb-note {
+  margin: 0 0 10px;
+  font-size: 0.75em;
+  opacity: 0.6;
+}
